@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://medatlas-vxbiz.github.io/vxbiz/sitemap.xml
+
+# Crawl delay to prevent server overload
+Crawl-delay: 1
+
+# Disallow search engines from crawling assets folder excessively
+User-agent: Googlebot
+Crawl-delay: 0.5
