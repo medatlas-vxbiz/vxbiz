@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://medatlas-vxbiz.github.io/vxbiz/</loc>
+    <lastmod>2026-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://medatlas-vxbiz.github.io/vxbiz/assets/vxbiz_intro.png</image:loc>
+      <image:title>VxBiz Platform Demo</image:title>
+      <image:caption>VxBiz AI-powered e-commerce platform managing FreshMart store</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://medatlas-vxbiz.github.io/vxbiz/assets/vxbiz_logo.png</image:loc>
+      <image:title>VxBiz Logo</image:title>
+      <image:caption>VxBiz AI-Native Business Platform Logo</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Anchor links (important pages) -->
+  <url>
+    <loc>https://medatlas-vxbiz.github.io/vxbiz/#why</loc>
+    <lastmod>2026-05-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://medatlas-vxbiz.github.io/vxbiz/#agents</loc>
+    <lastmod>2026-05-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
