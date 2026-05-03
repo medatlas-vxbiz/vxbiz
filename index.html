@@ -46,6 +46,25 @@
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="styles.css" />
+  <!-- Prevent aggressive caching in browsers -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Cache-bust stylesheet on load (appends timestamp) -->
+  <script>
+    (function() {
+      try {
+        var link = document.querySelector('link[rel="stylesheet"][href="styles.css"]');
+        if (link) {
+          var href = link.getAttribute('href').split('?')[0];
+          link.setAttribute('href', href + '?v=' + Date.now());
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
   
   <!-- Structured Data - Organization Schema -->
   <script type="application/ld+json">
