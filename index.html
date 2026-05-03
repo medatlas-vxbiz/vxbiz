@@ -46,6 +46,25 @@
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="styles.css" />
+  <!-- Prevent aggressive caching in browsers -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Cache-bust stylesheet on load (appends timestamp) -->
+  <script>
+    (function() {
+      try {
+        var link = document.querySelector('link[rel="stylesheet"][href="styles.css"]');
+        if (link) {
+          var href = link.getAttribute('href').split('?')[0];
+          link.setAttribute('href', href + '?v=' + Date.now());
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
   
   <!-- Structured Data - Organization Schema -->
   <script type="application/ld+json">
@@ -144,19 +163,11 @@
           <div class="pill">AI-native commerce automation</div>
           <h1>Start your AI-Native business in minutes!</h1>
           <p class="hero-lede">
-            Describe the business you want to launch. VxBiz creates the store, deploys it, and runs daily operations with AI agents.
-          </p>
-          <p class="hero-description">
-            From products and suppliers to orders, delivery, payments, inventory, and marketing—your AI operations team keeps the business moving while you approve the actions that matter.
+            Describe the business you want to launch. VxBiz creates the store, deploys it, and runs daily operations with AI agents while you approve the actions that matter.
           </p>
           <div class="hero-actions">
             <a href="https://vxbiz.web.app" target="_blank" rel="noopener noreferrer" class="button primary-button">Launch Your Demo Store</a>
-            <a href="#agents" class="button secondary-button">Explore agents</a>
-          </div>
-          <div class="trust-row" aria-label="VxBiz benefits">
-            <span>Prompt to store</span>
-            <span>Owner approvals</span>
-            <span>AI-managed operations</span>
+            <!-- <a href="#agents" class="button secondary-button">Explore agents</a> -->
           </div>
         </div>
 
@@ -334,6 +345,45 @@
         });
       });
     });
+  </script>
+  <script>
+    // Poll version.txt to detect new deploys and reload the page when it changes.
+    (function () {
+      const VERSION_URL = '/version.txt';
+      const STORAGE_KEY = 'vxbiz_version';
+      const CHECK_INTERVAL_MS = 30000; // 30s
+
+      async function fetchVersion() {
+        try {
+          const res = await fetch(VERSION_URL, { cache: 'no-store' });
+          if (!res.ok) return null;
+          return (await res.text()).trim();
+        } catch (e) {
+          return null;
+        }
+      }
+
+      async function check() {
+        const remote = await fetchVersion();
+        if (!remote) return;
+        const local = localStorage.getItem(STORAGE_KEY);
+        if (!local) {
+          localStorage.setItem(STORAGE_KEY, remote);
+          return;
+        }
+        if (local !== remote) {
+          // New version detected. Force reload from server.
+          localStorage.setItem(STORAGE_KEY, remote);
+          // Use location.replace with cache-busting query to ensure fresh HTML
+          const url = window.location.pathname + '?_v=' + Date.now();
+          window.location.replace(url);
+        }
+      }
+
+      // Initial check after load, then poll periodically
+      check();
+      setInterval(check, CHECK_INTERVAL_MS);
+    })();
   </script>
 </body>
 </html>
