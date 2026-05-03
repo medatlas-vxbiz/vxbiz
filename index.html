@@ -354,5 +354,44 @@
       });
     });
   </script>
+  <script>
+    // Poll version.txt to detect new deploys and reload the page when it changes.
+    (function () {
+      const VERSION_URL = '/version.txt';
+      const STORAGE_KEY = 'vxbiz_version';
+      const CHECK_INTERVAL_MS = 30000; // 30s
+
+      async function fetchVersion() {
+        try {
+          const res = await fetch(VERSION_URL, { cache: 'no-store' });
+          if (!res.ok) return null;
+          return (await res.text()).trim();
+        } catch (e) {
+          return null;
+        }
+      }
+
+      async function check() {
+        const remote = await fetchVersion();
+        if (!remote) return;
+        const local = localStorage.getItem(STORAGE_KEY);
+        if (!local) {
+          localStorage.setItem(STORAGE_KEY, remote);
+          return;
+        }
+        if (local !== remote) {
+          // New version detected. Force reload from server.
+          localStorage.setItem(STORAGE_KEY, remote);
+          // Use location.replace with cache-busting query to ensure fresh HTML
+          const url = window.location.pathname + '?_v=' + Date.now();
+          window.location.replace(url);
+        }
+      }
+
+      // Initial check after load, then poll periodically
+      check();
+      setInterval(check, CHECK_INTERVAL_MS);
+    })();
+  </script>
 </body>
 </html>
