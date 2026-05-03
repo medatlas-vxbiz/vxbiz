@@ -124,6 +124,11 @@
         <img src="assets/vxbiz_logo.png" alt="VxBiz Logo" class="brand-logo" />
         <span>VxBiz</span>
       </a>
+      <button class="menu-button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div class="nav-links">
         <a href="#why">Why VxBiz</a>
         <a href="#agents">AI Agents</a>
@@ -157,14 +162,14 @@
 
         <div class="hero-visual" aria-label="VxBiz AI commerce image">
           <img src="assets/vxbiz_intro.png" alt="VxBiz AI Commerce Platform showing FreshMart e-commerce store and AI agents managing operations" class="hero-image" />
-          <div class="floating-card card-one">
+          <!-- <div class="floating-card card-one">
             <strong>Orders Agent</strong>
             <span>12 orders updated</span>
           </div>
           <div class="floating-card card-two">
             <strong>Approval needed</strong>
             <span>New supplier quote</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -188,7 +193,7 @@
 
     <section class="value-section">
       <div class="container value-card">
-        <div>
+        <div class="section-heading centered">
           <p class="eyebrow">The new way to start selling</p>
           <h2>Run a business without running every task yourself.</h2>
         </div>
@@ -273,7 +278,7 @@
             <h3>Orders Agent</h3>
             <p>Monitors each order from checkout to completion and keeps customers informed automatically.</p>
           </article>
-          <article class="agent-card spotlight-card">
+          <article class="agent-card">
             <div class="agent-icon">🏭</div>
             <h3>Inventory &amp; VMS Agent</h3>
             <p>Tracks stock levels, monitors supplier performance, and helps prevent costly inventory gaps.</p>
@@ -310,5 +315,25 @@
       <a href="mailto:medatlas@vxbiz.com">medatlas@vxbiz.com</a>
     </div>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.querySelector('.menu-button');
+      const navLinks = document.querySelector('.nav-links');
+      if (!btn || !navLinks) return;
+      btn.addEventListener('click', function () {
+        const open = navLinks.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+      });
+      // close when a link is clicked (mobile)
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          if (navLinks.classList.contains('open')) {
+            navLinks.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
